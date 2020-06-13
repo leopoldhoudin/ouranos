@@ -4,14 +4,10 @@ import styled, { css } from 'styled-components';
 import { scale } from 'theme';
 
 import Icon from './Icon';
+import { getHeight } from './common';
 
 const getWidth = (full) => (full && '100%') || 'fit-content';
 const getMinWidth = ({sizes}, large) => (
-  (large && scale(sizes.large, 2).pixels)
-  || sizes.large.pixels
-);
-
-const getHeight = ({sizes}, large) => (
   (large && scale(sizes.large, 2).pixels)
   || sizes.large.pixels
 );

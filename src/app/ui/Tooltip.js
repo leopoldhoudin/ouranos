@@ -1,4 +1,4 @@
-import React, { useState, createRef, useContext } from 'react';
+import React, { useState, useRef, useContext } from 'react';
 import { createPortal } from 'react-dom';
 import styled, { ThemeContext } from 'styled-components';
 
@@ -40,7 +40,7 @@ const Portal = ({anchor, children}) => {
   const [ref, setRef] = useState();
   const theme = useContext(ThemeContext);
 
-  const rect = anchor && anchor.getBoundingClientRect();
+  const rect = anchor.current && anchor.current.getBoundingClientRect();
   const top = rect && ref && makeSize(
     rect.y + (rect.height - ref.getBoundingClientRect().height) / 2
   );
@@ -59,12 +59,12 @@ const Portal = ({anchor, children}) => {
 };
 
 const Tooltip = ({className, anchor, children}) => {
-  const [ref, setRef] = useState();
+  const ref = useRef();
   const [hidden, setHidden] = useState(true);
 
   return (
     <div
-      ref={setRef}
+      ref={ref}
       className={className}
       onMouseOver={() => setHidden(false)}
       onMouseOut={() => setHidden(true)}>

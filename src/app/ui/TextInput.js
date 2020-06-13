@@ -1,13 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import styled, { css } from 'styled-components';
 
 import { uuid4 } from 'utils';
 import { darken } from 'theme';
 
-const getHeight = ({sizes}, large) => (
-  (large && scale(sizes.large, 2).pixels)
-  || sizes.large.pixels
-);
+import { getHeight } from './common';
 
 const Input = styled.input`
   width: 100%;
@@ -29,16 +26,22 @@ const Input = styled.input`
   }
 `;
 
-const TextInput = ({className, label, value, onChange}) => {
+const TextInput = ({className, label, large, value, onChange}) => {
   const [uuid, setUuid] = useState(uuid4());
-  const [ref, setRef] = useState(null);
+  const ref = useRef();
 
-  const handleClick = () => ref && ref.focus();
+  const handleClick = () => ref.current && ref.current.focus();
   const handleChange = event => onChange && onChange(event.target.value);
 
   return (
     <div className={className} onClick={handleClick}>
-      <Input name={uuid} type='text' ref={setRef} value={value} onChange={handleChange} />
+      <Input
+        name={uuid}
+        large={large}
+        type='text'
+        ref={ref}
+        value={value}
+        onChange={handleChange} />
       {label && <label htmlFor={uuid}>{label}</label>}
     </div>
   );
@@ -53,6 +56,8 @@ export default styled(TextInput)`
 
     & > label {
       margin-left: ${({ theme: { sizes }}) => sizes.small.pixels};
+
+      height: ${({ theme, large }) => getHeight(theme, large)};
 
       font-size: ${({ theme: { sizes: { font } }}) => font.medium.pixels};
       line-height: ${({ theme, large }) => getHeight(theme, large)};

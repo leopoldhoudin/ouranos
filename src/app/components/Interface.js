@@ -69,7 +69,7 @@ const Interface = () => {
   const [isExpanded, setIsExpanded] = useState(true);
   const [windows, setWindows] = useState({
     engine: false,
-    bodies: true,
+    bodies: false,
     physics: false,
     graphics: false,
     interface: false,

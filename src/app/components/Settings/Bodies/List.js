@@ -52,6 +52,10 @@ const Header = {
 };
 
 const Body = {
+  Container: styled.div`
+    height: 400px;
+  `,
+
   Layout: styled.div`
     display: flex;
     flex-direction: column;
@@ -123,20 +127,22 @@ const List = ({onSelect}) => {
         <Header.Cell name='mass' sorting={sorting} onClick={handleSortingClick} />
         <Header.Cell name='radius' sorting={sorting} onClick={handleSortingClick} />
       </Header.Layout>
-      <Scroll vertical height={makeSize(400)}>
-        <Body.Layout>
-        {
-          sortBodies(bodies, sorting).map((body, index) => (
-            <Body.Row key={index} onClick={() => onSelect(body)}>
-              <Body.Cell size='huge'><Icon name={body.type} /></Body.Cell>
-              <Body.Cell><Text primary>{body.name}</Text></Body.Cell>
-              <Body.Cell><Text primary>{body.mass}</Text></Body.Cell>
-              <Body.Cell><Text primary>{body.radius}</Text></Body.Cell>
-            </Body.Row>
-          ))
-        }
-        </Body.Layout>
-      </Scroll>
+      <Body.Container>
+        <Scroll vertical height={makeSize(400)}>
+          <Body.Layout>
+          {
+            sortBodies(bodies, sorting).map((body, index) => (
+              <Body.Row key={index} onClick={() => onSelect(body)}>
+                <Body.Cell size='huge'><Icon name={body.type} /></Body.Cell>
+                <Body.Cell><Text primary>{body.name}</Text></Body.Cell>
+                <Body.Cell><Text primary>{body.mass}</Text></Body.Cell>
+                <Body.Cell><Text primary>{body.radius}</Text></Body.Cell>
+              </Body.Row>
+            ))
+          }
+          </Body.Layout>
+        </Scroll>
+      </Body.Container>
       <Footer>
         <Button large full primary text='New body' onClick={() => onSelect(null)} />
       </Footer>

@@ -55,6 +55,7 @@ const start = () => {
   self.camera.position.x = 50;
   self.camera.position.y = 50;
   self.camera.position.z = 50;
+  self.camera.lookAt(0, 0, 0);
   self.camera.updateProjectionMatrix();
 
   main();

@@ -8,8 +8,8 @@ const Scroll = ({className, children}) => (
 );
 
 export default styled(Scroll)`
-  ${({ height }) => height && css`height: ${height.pixels};`}
-  ${({ width }) => width && css`width: ${width.pixels};`}
+  ${({ height }) => height && css`max-height: ${height.pixels};`}
+  ${({ width }) => width && css`max-width: ${width.pixels};`}
 
   ${({ vertical }) => vertical && css`overflow-y: auto;`}
   ${({ horizontal }) => horizontal && css`overflow-x: scroll;`}

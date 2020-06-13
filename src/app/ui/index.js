@@ -1,4 +1,5 @@
 export Button from './Button';
+export DropDown from './DropDown';
 export Icon from './Icon';
 export Scroll from './Scroll';
 export Text from './Text';

@@ -18,12 +18,14 @@
 - [x] Init W.Engine w/ algo + physics + bodies specs
 - [x] Activated state for menu buttons + Tooltip for menu buttons
 - [x] Separate constants (params, physics, masses, etc...) from dynamic (timestamp, position, velocity, rotation)
-- [ ] Basic bodies settings window
+- [ ] Basic bodies settings window; general (name, type); physical (mass, radius); graphical (texture)
+- [ ] Fix bug close bodies window; go to editor; viewer is black
 - [ ] Implement Euler Explicit
 - [ ] EventType to reset engine + implementation
 - [ ] Implement Euler Backward
 - [ ] Basic engine settings window
 - [ ] Graphics option: scale body
+- [ ] Focus / follow body
 
 ## Idea box
 - Have some record of orbital elements + charts... Will need to think about how
