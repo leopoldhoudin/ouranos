@@ -1,7 +1,7 @@
 ### Links
-For icons: https://fontawesome.com/icons/play?style=solid
-For SVG: https://aydos.com/svgedit/
-HTML Codes for chars: https://www.rapidtables.com/web/html/html-codes.html (then convert from decimal to hexadecimal)
+- For icons: https://fontawesome.com/icons/play?style=solid
+- For SVG: https://aydos.com/svgedit/
+- HTML Codes for chars: https://www.rapidtables.com/web/html/html-codes.html (then convert from decimal to hexadecimal)
 
 ### Images / Textures
 - http://planetpixelemporium.com/

@@ -14,6 +14,7 @@ const self = {
 
 export const startViewer = (element, body) => {
   if (!element) return; // Extra safety; yet should not be necessary...
+  if (self.animationId) return; // Already running
 
   const rect = element.getBoundingClientRect();
 
@@ -48,7 +49,6 @@ export const startViewer = (element, body) => {
 };
 
 export const stopViewer = () => {
-  console.log('STOPPING VIEWER');
   cancelAnimationFrame(self.animationId);
   self.animationId = null;
 };

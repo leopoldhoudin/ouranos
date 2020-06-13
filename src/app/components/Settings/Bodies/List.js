@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 
-import { capitalize } from 'utils';
+import { capitalize, sort } from 'utils';
 import state from 'state';
 import { Button, Text, Icon, Scroll } from 'ui';
 import { makeSize, scale, transparentize } from 'theme';
 
-const getSortIcon = (name, sort) => {
-  if (sort && sort.name == name) {
-    return sort.asc ? 'sort-asc' : 'sort-desc';
+const getSortingIcon = (name, sorting) => {
+  if (sorting && sorting.name == name) {
+    return sorting.asc ? 'sort-asc' : 'sort-desc';
   } else {
     return 'sort-all';
   }
@@ -36,11 +36,11 @@ const Header = {
     width: 100%;
   `,
 
-  Cell: styled(({className, name, sort, onClick}) => (
+  Cell: styled(({className, name, sorting, onClick}) => (
     <div className={className}>
       <Button
         ghost
-        icon={getSortIcon(name, sort)}
+        icon={getSortingIcon(name, sorting)}
         onClick={() => onClick(name)} />
       <Text primary bold>{capitalize(name)}</Text>
     </div>
@@ -89,43 +89,44 @@ const Footer = styled.div`
   width: 100%;
 `;
 
-const sortBodies = (bodies, sort) => {
-  if (sort) {
-    const sorted = [...bodies].sort((a, b) => a[sort.name] - b[sort.name]);
-    return sort.desc ? sorted.reverse() : sorted;
+const sortBodies = (bodies, sorting) => {
+  if (sorting) {
+    console.log(sorting);
+    const sorted = sort(bodies, body => body[sorting.name]);
+    return sorting.desc ? sorted.reverse() : sorted;
   }
 
-  return bodies;
+  return sort(bodies, body => body.name);
 };
 
 const List = ({onSelect}) => {
-  const [sort, setSort] = useState(null);
+  const [sorting, setSorting] = useState(null);
   const [bodies, setBodies] = state.use('bodies');
 
-  const handleSortClick = name => {
-    if (sort && sort.name == name) {
-      if (sort.asc) {
-        setSort({name, desc: true});
+  const handleSortingClick = name => {
+    if (sorting && sorting.name == name) {
+      if (sorting.asc) {
+        setSorting({name, desc: true});
       } else {
-        setSort(null);
+        setSorting(null);
       }
     } else {
-      setSort({name, asc: true});
+      setSorting({name, asc: true});
     }
   };
 
   return (
     <Layout>
       <Header.Layout>
-        <Header.Cell size='huge' name='type' sort={sort} onClick={handleSortClick} />
-        <Header.Cell name='name' sort={sort} onClick={handleSortClick} />
-        <Header.Cell name='mass' sort={sort} onClick={handleSortClick} />
-        <Header.Cell name='radius' sort={sort} onClick={handleSortClick} />
+        <Header.Cell size='huge' name='type' sorting={sorting} onClick={handleSortingClick} />
+        <Header.Cell name='name' sorting={sorting} onClick={handleSortingClick} />
+        <Header.Cell name='mass' sorting={sorting} onClick={handleSortingClick} />
+        <Header.Cell name='radius' sorting={sorting} onClick={handleSortingClick} />
       </Header.Layout>
       <Scroll vertical height={makeSize(400)}>
         <Body.Layout>
         {
-          sortBodies(bodies, sort).map((body, index) => (
+          sortBodies(bodies, sorting).map((body, index) => (
             <Body.Row key={index} onClick={() => onSelect(body)}>
               <Body.Cell size='huge'><Icon name={body.type} /></Body.Cell>
               <Body.Cell><Text primary>{body.name}</Text></Body.Cell>

@@ -1,4 +1,4 @@
-import { copyArray } from 'utils';
+import { clone } from 'utils';
 
 import { makeIntegrator } from './factory';
 
@@ -6,10 +6,10 @@ const compute = (params, {timestamp, masses, positions, rotations}) => {
   const state = {
     timestamp: timestamp + 60,
 
-    masses: copyArray(masses),
+    masses: clone(masses),
 
-    positions: copyArray(positions),
-    rotations: copyArray(rotations),
+    positions: clone(positions),
+    rotations: clone(rotations),
   };
 
   state.positions[3] = 50 * Math.cos(0.001 * state.timestamp); // moon pos-x

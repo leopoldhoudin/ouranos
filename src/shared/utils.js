@@ -11,4 +11,16 @@ export const dampen = (key, delay, callback) => {
   }
 };
 
-export const copyArray = array => array && array.map(val => val);
+export const clone = obj => {
+  if (obj instanceof Array) return obj.map(val => val);
+  if (obj instanceof Object) return JSON.parse(JSON.stringify(obj));
+};
+
+export const sort = (array, getter) => [...array].sort((a, b) => getter(a) > getter(b) ? 1 : -1);
+
+export const uuid4 = () => {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+    const r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });;
+};

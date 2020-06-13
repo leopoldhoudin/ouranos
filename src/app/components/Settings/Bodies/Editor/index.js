@@ -3,9 +3,14 @@ import styled from 'styled-components';
 
 import { makeSize } from 'theme';
 import { Button } from 'ui';
-import { capitalize } from 'utils';
+import { capitalize, clone } from 'utils';
+import state from 'state';
 
 import Viewer from './Viewer';
+import General from './General';
+import Physical from './Physical';
+import Orbital from './Orbital';
+import Graphical from './Graphical';
 
 const Layout = styled.div`
   display: flex;
@@ -30,6 +35,8 @@ const Body = {
 
   Content: styled.div`
     flex: 1;
+
+    padding-left: ${({ theme: { sizes }}) => sizes.medium.pixels};
   `,
 };
 
@@ -48,6 +55,8 @@ let callbacks = new Array();
 // Body has a value => editor
 // Body is null => creator
 const Editor = ({body, onClose}) => {
+  const [bodies, setBodies] = state.use('bodies');
+  const [edited, setEdited] = useState(clone(body));
   const [view, setView] = useState('general');
 
   const MenuButton = ({name}) => (
@@ -60,10 +69,9 @@ const Editor = ({body, onClose}) => {
       onClick={() => setView(name)} />
   );
 
-  const requestOnStop = callback => {
-    console.log('here');
-    callbacks.push(callback);
-  };
+  const requestOnStop = callback => callbacks.push(callback);
+
+  const handleChange = updated => setEdited({...edited, ...updated});
 
   const handleClose = () => {
     callbacks.forEach(callback => callback());
@@ -72,7 +80,13 @@ const Editor = ({body, onClose}) => {
   };
 
   const handleSave = () => {
-    // Save body specs here
+    const newBodies = clone(bodies);
+    console.log(newBodies, body.name);
+    newBodies.splice(newBodies.findIndex(b => b.name == body.name), 1);
+    newBodies.push(edited);
+
+    setBodies({slice: newBodies});
+
     handleClose();
   };
 
@@ -84,8 +98,13 @@ const Editor = ({body, onClose}) => {
           <MenuButton name='general' />
           <MenuButton name='physical' />
           <MenuButton name='orbital' />
+          <MenuButton name='graphical' />
         </Body.Aside>
         <Body.Content>
+          {view == 'general' && <General body={edited} onChange={handleChange} />}
+          {view == 'physical' && <Physical />}
+          {view == 'orbital' && <Orbital />}
+          {view == 'graphical' && <Graphical />}
         </Body.Content>
       </Body.Layout>
       <Footer>
