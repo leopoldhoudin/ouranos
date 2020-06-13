@@ -1,0 +1,15 @@
+@font-face {
+  font-family: "standard";
+  font-weight: normal;
+  src: local("Geneva");
+}
+@font-face {
+  font-family: "standard";
+  font-weight: bold;
+  src: url("//db.onlinewebfonts.com/t/b70892ae83eea7c8871703a69baff08a.eot");
+  src: url("//db.onlinewebfonts.com/t/b70892ae83eea7c8871703a69baff08a.eot?#iefix") format("embedded-opentype"),
+       url("//db.onlinewebfonts.com/t/b70892ae83eea7c8871703a69baff08a.woff2") format("woff2"),
+       url("//db.onlinewebfonts.com/t/b70892ae83eea7c8871703a69baff08a.woff") format("woff"),
+       url("//db.onlinewebfonts.com/t/b70892ae83eea7c8871703a69baff08a.ttf") format("truetype"),
+       url("//db.onlinewebfonts.com/t/b70892ae83eea7c8871703a69baff08a.svg#Geneva") format("svg");
+}

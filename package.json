@@ -1,0 +1,37 @@
+{
+  "name": "ouranos",
+  "version": "0.0.1",
+  "description": "Universe sandbox",
+  "main": "src/main.js",
+  "author": "Léopold Houdin",
+  "license": "MIT",
+  "scripts": {
+    "start": "webpack-dev-server --open --mode development --env.NODE_ENV=development",
+    "build": "rm -rf dist/ && webpack --mode production --env.NODE_ENV=production"
+  },
+  "dependencies": {
+    "luxon": "^1.24.1",
+    "polished": "^3.6.4",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-draggable": "^4.4.2",
+    "react-tracked": "^1.4.0",
+    "styled-components": "^5.0.1",
+    "three": "^0.117.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.9.0",
+    "@babel/plugin-proposal-export-default-from": "^7.10.1",
+    "@babel/preset-env": "^7.9.0",
+    "@babel/preset-react": "^7.9.4",
+    "babel-loader": "^8.1.0",
+    "babel-plugin-styled-components": "^1.10.7",
+    "copy-webpack-plugin": "^5.1.1",
+    "html-loader": "^1.1.0",
+    "html-webpack-plugin": "^4.0.4",
+    "resolve-entry-modules-webpack-plugin": "^2.0.0",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.10.3"
+  }
+}
