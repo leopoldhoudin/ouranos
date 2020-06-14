@@ -5,6 +5,6 @@ const Container = styled.div`
   color: white;
 `;
 
-const Orbital = ({body}) => <Container>Orbital</Container>;
+const Orbital = ({body}) => <Container></Container>;
 
 export default Orbital;

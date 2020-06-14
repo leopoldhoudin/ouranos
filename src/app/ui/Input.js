@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 
 import { uuid4 } from 'utils';
@@ -6,7 +6,12 @@ import { darken } from 'theme';
 
 import { getHeight } from './common';
 
-const Input = styled.input`
+const validators = {
+  text: value => true,
+  number: value => /^[+-]?(\d+([.]\d*)?([eE][+-]?\d+)?|[.]\d+([eE][+-]?\d+)?)$/.test(value),
+};
+
+const InputElement = styled.input`
   width: 100%;
   height: ${({ theme, large}) => getHeight(theme, large)};
   box-sizing: border-box;
@@ -21,23 +26,42 @@ const Input = styled.input`
   background: ${({ theme: { colors }}) => darken(colors.standard.solid.back)};
   caret-color: ${({ theme: { colors }}) => colors.primary.solid.back};
 
-  &:focus {
-    border-bottom: 2px solid ${({ theme: { colors }}) => colors.primary.solid.back};
-  }
+  ${({ valid }) => valid && css`
+    &:focus {
+      border-bottom: 2px solid ${({ theme: { colors }}) => colors.primary.solid.back};
+    }
+  `}
+
+  ${({ valid }) => !valid && css`
+    border-bottom: 2px solid ${({ theme: { colors }}) => colors.alert.solid.backActive};
+  `}
 `;
 
-const TextInput = ({className, label, large, value, onChange}) => {
+const Input = ({className, type, label, large, value, onChange}) => {
+  const validator = validators[type || 'text'];
+
   const [uuid, setUuid] = useState(uuid4());
+  const [valid, setValid] = useState(validator(value));
   const ref = useRef();
 
   const handleClick = () => ref.current && ref.current.focus();
-  const handleChange = event => onChange && onChange(event.target.value);
+  const handleChange = event => {
+    const value = event.target.value;
+    if (onChange) {
+      onChange(value, validator(value));
+    }
+  };
+
+  useEffect(() => {
+    setValid(validator(value));
+  }, [value]);
 
   return (
     <div className={className} onClick={handleClick}>
-      <Input
+      <InputElement
         name={uuid}
         large={large}
+        valid={valid}
         type='text'
         ref={ref}
         value={value}
@@ -47,7 +71,7 @@ const TextInput = ({className, label, large, value, onChange}) => {
   );
 };
 
-export default styled(TextInput)`
+export default styled(Input)`
     ${({ label }) => label && css`
       display: flex;
       flex-direction: column-reverse;
@@ -64,7 +88,7 @@ export default styled(TextInput)`
       color: ${({ theme: { colors }}) => colors.standard.solid.fore};
     }
 
-    & ${Input}:focus + label {
+    & ${InputElement}:focus + label {
       color: ${({ theme: { colors }}) => colors.primary.solid.back};
     }
 `;

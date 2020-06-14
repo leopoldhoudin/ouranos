@@ -18,14 +18,18 @@
 - [x] Init W.Engine w/ algo + physics + bodies specs
 - [x] Activated state for menu buttons + Tooltip for menu buttons
 - [x] Separate constants (params, physics, masses, etc...) from dynamic (timestamp, position, velocity, rotation)
-- [ ] Basic bodies settings window; general (name, type); physical (mass, radius); graphical (texture)
-- [ ] Fix bug close bodies window; go to editor; viewer is black
+- [x] Basic bodies settings window; general (name, type); physical (mass, radius); graphical (texture)
+- [x] Fix bug close bodies window; go to editor; viewer is black
+- [ ] Add validator on body name update => check if not already a name of another body!
 - [ ] Implement Euler Explicit
 - [ ] EventType to reset engine + implementation
 - [ ] Implement Euler Backward
 - [ ] Basic engine settings window
 - [ ] Graphics option: scale body
 - [ ] Focus / follow body
+- [ ] Updates of a body in the Settings Window are reflected on the Graphics + Engine
+- [ ] Add ui.Input explanation why is not valid => validator could return NULL if valid; string w/ message if not valid;
+      Use small icon + tooltip on right side of input of before value?
 
 ## Idea box
 - Have some record of orbital elements + charts... Will need to think about how

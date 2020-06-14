@@ -50,8 +50,6 @@ const Footer = styled.div`
   }
 `;
 
-let callbacks = new Array();
-
 // Body has a value => editor
 // Body is null => creator
 const Editor = ({body, onClose}) => {
@@ -69,19 +67,12 @@ const Editor = ({body, onClose}) => {
       onClick={() => setView(name)} />
   );
 
-  const requestOnStop = callback => callbacks.push(callback);
-
   const handleChange = updated => setEdited({...edited, ...updated});
 
-  const handleClose = () => {
-    callbacks.forEach(callback => callback());
-    callbacks.splice(0, callbacks.length);
-    onClose();
-  };
+  const handleClose = () => onClose && onClose();
 
   const handleSave = () => {
     const newBodies = clone(bodies);
-    console.log(newBodies, body.name);
     newBodies.splice(newBodies.findIndex(b => b.name == body.name), 1);
     newBodies.push(edited);
 
@@ -94,7 +85,7 @@ const Editor = ({body, onClose}) => {
     <Layout>
       <Body.Layout>
         <Body.Aside>
-          <Viewer body={body} requestOnStop={requestOnStop} />
+          <Viewer body={body} />
           <MenuButton name='general' />
           <MenuButton name='physical' />
           <MenuButton name='orbital' />
@@ -102,9 +93,9 @@ const Editor = ({body, onClose}) => {
         </Body.Aside>
         <Body.Content>
           {view == 'general' && <General body={edited} onChange={handleChange} />}
-          {view == 'physical' && <Physical />}
-          {view == 'orbital' && <Orbital />}
-          {view == 'graphical' && <Graphical />}
+          {view == 'physical' && <Physical body={edited} onChange={handleChange} />}
+          {view == 'orbital' && <Orbital body={edited} onChange={handleChange} />}
+          {view == 'graphical' && <Graphical body={edited} onChange={handleChange} />}
         </Body.Content>
       </Body.Layout>
       <Footer>

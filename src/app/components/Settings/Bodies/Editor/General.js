@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
-import { Scroll, TextInput, DropDown, Text, Icon } from 'ui';
+import { Scroll, Input, DropDown, Text, Icon } from 'ui';
 
 const Container = styled.div`
   width: 100%;
@@ -21,31 +21,27 @@ const Space = styled.div`
   width: ${({ theme: { sizes }}) => sizes.small.pixels};
 `;
 
-const General = ({body, onChange}) => {
-  return (
-    <Container>
-      <Scroll>
-        <Layout>
-          <TextInput
-            full
-            label='Name'
-            value={body.name}
-            onChange={name => onChange({name})} />
-          <DropDown
-            label='Type'
-            value={body.type}
-            onChange={type => onChange({type})}>
-            <DropDown.Item name='planet'>
-              <Icon name='planet' /><Space /><Text>Planet</Text>
-            </DropDown.Item>
-            <DropDown.Item name='star'>
-              <Icon name='star' /><Space /><Text>Star</Text>
-            </DropDown.Item>
-          </DropDown>
-        </Layout>
-      </Scroll>
-    </Container>
-  );
-};
+const General = ({body, onChange}) => (
+  <Container>
+    <Layout>
+      <Input
+        full
+        label='Name'
+        value={body.name}
+        onChange={name => onChange({name})} />
+      <DropDown
+        label='Type'
+        value={body.type}
+        onChange={type => onChange({type})}>
+        <DropDown.Item name='planet'>
+          <Icon name='planet' /><Space /><Text>Planet</Text>
+        </DropDown.Item>
+        <DropDown.Item name='star'>
+          <Icon name='star' /><Space /><Text>Star</Text>
+        </DropDown.Item>
+      </DropDown>
+    </Layout>
+  </Container>
+);
 
 export default General;

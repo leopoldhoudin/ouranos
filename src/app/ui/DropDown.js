@@ -112,12 +112,6 @@ const Portal = ({anchor, elements, setOpen, onChange}) => {
   const ref = useRef();
   useEffect(() => {
     const handleClick = event => {
-      console.log(
-        ref.current,
-        ref.current.contains(event.target),
-        anchor.current,
-        anchor.current.contains(event.target),
-      );
       if (ref.current
         && !ref.current.contains(event.target)
         && anchor.current

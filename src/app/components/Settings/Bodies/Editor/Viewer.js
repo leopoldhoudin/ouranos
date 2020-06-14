@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import styled from 'styled-components';
 
 import { scale } from 'theme';
@@ -23,21 +23,20 @@ const View = styled.div`
   height: 100%;
 `;
 
-const Viewer = ({body, requestOnStop}) => {
-  const stop = () => {
-    stopViewer();
-  }
+const Viewer = ({body}) => {
+  const ref = useRef();
 
-  const setRef = ref => {
-    if (ref) {
-      startViewer(ref, body);
-      requestOnStop(stop);
+  useEffect(() => {
+    if (ref.current) {
+      startViewer(ref.current, body);
     }
-  };
+
+    return () => stopViewer();
+  }, [ref]);
 
   return (
     <Container>
-      <View ref={setRef} />
+      <View ref={ref} />
     </Container>
   );
 };
