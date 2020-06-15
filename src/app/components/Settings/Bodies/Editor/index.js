@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { makeSize } from 'theme';
 import { Button } from 'ui';
-import { capitalize, clone } from 'utils';
+import { capitalize, clone, uuid4 } from 'utils';
 import state from 'state';
 
 import Viewer from './Viewer';
@@ -50,12 +50,25 @@ const Footer = styled.div`
   }
 `;
 
+const makeNewBody = () => ({
+  uuid: uuid4(),
+  // General
+  name: '',
+  type: 'planet',
+  // Physical
+  mass: 1,
+  radius: 1,
+  // Orbital
+  // Graphical
+  texture: 'earth',
+});
+
 // Body has a value => editor
 // Body is null => creator
 const Editor = ({body, onClose}) => {
   const [bodies, setBodies] = state.use('bodies');
-  const [edited, setEdited] = useState(clone(body));
-  const [errors, setErrors] = useState(new Object());
+  const [edited, setEdited] = useState(body ? clone(body) : makeNewBody());
+  const [errors, setErrors] = useState(body ? new Object() : {name: 'empty'});
   const [view, setView] = useState('general');
 
   const MenuButton = ({name}) => (
@@ -77,7 +90,9 @@ const Editor = ({body, onClose}) => {
 
   const handleSave = () => {
     const newBodies = clone(bodies);
-    newBodies.splice(newBodies.findIndex(b => b.name == body.name), 1);
+    if (body) {
+      newBodies.splice(newBodies.findIndex(b => b.name == body.name), 1);
+    }
     newBodies.push(edited);
 
     setBodies({slice: newBodies});
@@ -91,7 +106,7 @@ const Editor = ({body, onClose}) => {
     <Layout>
       <Body.Layout>
         <Body.Aside>
-          <Viewer body={body} />
+          <Viewer body={edited} />
           <MenuButton name='general' />
           <MenuButton name='physical' />
           <MenuButton name='orbital' />

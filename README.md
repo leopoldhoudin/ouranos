@@ -21,7 +21,8 @@
 - [x] Basic bodies settings window; general (name, type); physical (mass, radius); graphical (texture)
 - [x] Fix bug close bodies window; go to editor; viewer is black
 - [x] Add validator on body name update => check if not already a name of another body! + cannot save body if there is an error
-- [ ] Implement new body (crashes for now :p)
+- [x] Implement new body (crashes for now :p)
+- [ ] Implement delete body
 - [ ] Implement Euler Explicit
 - [ ] EventType to reset engine + implementation
 - [ ] Implement Euler Backward
