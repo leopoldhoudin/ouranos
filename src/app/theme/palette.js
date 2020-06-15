@@ -1,12 +1,15 @@
 import {
   darken as pdarken,
   transparentize as ptransparentize,
+  mix as pmix,
   lighten
 } from 'polished';
 
 export const darken = color => pdarken(0.05, color);
 
 export const transparentize = color => ptransparentize(0.5, color);
+
+export const mix = (firstColor, secondColor) => pmix(0.4, firstColor, secondColor);
 
 // https://paletton.com/#uid=73F210knBJje7+Jk1VpoPtikFej
 const BASE_RED = '#e94234';

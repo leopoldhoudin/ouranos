@@ -11,5 +11,5 @@ const theme = {
 };
 
 export default theme ;
-export { darken, transparentize } from './palette';
+export { darken, transparentize, mix } from './palette';
 export { makeSize, scale } from './sizes';

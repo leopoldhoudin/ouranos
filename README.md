@@ -20,7 +20,8 @@
 - [x] Separate constants (params, physics, masses, etc...) from dynamic (timestamp, position, velocity, rotation)
 - [x] Basic bodies settings window; general (name, type); physical (mass, radius); graphical (texture)
 - [x] Fix bug close bodies window; go to editor; viewer is black
-- [ ] Add validator on body name update => check if not already a name of another body!
+- [x] Add validator on body name update => check if not already a name of another body! + cannot save body if there is an error
+- [ ] Implement new body (crashes for now :p)
 - [ ] Implement Euler Explicit
 - [ ] EventType to reset engine + implementation
 - [ ] Implement Euler Backward

@@ -24,9 +24,9 @@ const Graphical = ({body, onChange}) => (
         label='Texture'
         value={body.texture}
         onChange={texture => onChange({texture})} >
-        <DropDown.Item name='earth'><Text>Earth</Text></DropDown.Item>
-        <DropDown.Item name='moon'><Text>Moon</Text></DropDown.Item>
-        <DropDown.Item name='sun'><Text>Sun</Text></DropDown.Item>
+        <DropDown.Item name='earth'><Text>earth</Text></DropDown.Item>
+        <DropDown.Item name='moon'><Text>moon</Text></DropDown.Item>
+        <DropDown.Item name='sun'><Text>sun</Text></DropDown.Item>
       </DropDown>
     </Layout>
   </Container>

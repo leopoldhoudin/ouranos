@@ -36,9 +36,9 @@ const TextBox = styled.div`
   margin: 0 ${({theme, large}) => getMargin(theme, large)};
 `;
 
-const Button = ({ className, text, icon, ghost, full, small, large, onClick }) => {
+const Button = ({ className, text, icon, ghost, full, small, large, disabled, onClick }) => {
   return (
-    <div className={className} onClick={onClick}>
+    <div className={className} onClick={() => onClick && !disabled && onClick()}>
       {
         icon && (
           <IconBox large={large}>
@@ -76,6 +76,11 @@ export default styled(Button)`
     background: ${({ theme: { colors } }) => colors.standard.effect.backActive};
   }
 
+  ${({ disabled }) => disabled && css`
+    color: ${({ theme: { colors } }) => colors.standard.effect.foreDisabled};
+    background: ${({ theme: { colors } }) => colors.standard.effect.backDisabled};
+  `}
+
   ${({ solid }) => solid && css`
     color: ${({ theme: { colors } }) => colors.standard.solid.fore};
     background: ${({ theme: { colors } }) => colors.standard.solid.back};
@@ -89,6 +94,11 @@ export default styled(Button)`
       color: ${({ theme: { colors } }) => colors.standard.solid.foreActive};
       background: ${({ theme: { colors } }) => colors.standard.solid.backActive};
     }
+
+    ${({ disabled }) => disabled && css`
+      color: ${({ theme: { colors } }) => colors.standard.solid.foreDisabled};
+      background: ${({ theme: { colors } }) => colors.standard.solid.backDisabled};
+    `}
   `}
 
   ${({ primary }) => primary && css`
@@ -104,6 +114,11 @@ export default styled(Button)`
       color: ${({ theme: { colors } }) => colors.primary.effect.foreActive};
       background: ${({ theme: { colors } }) => colors.primary.effect.backActive};
     }
+
+    ${({ disabled }) => disabled && css`
+      color: ${({ theme: { colors } }) => colors.primary.solid.foreDisabled};
+      background: ${({ theme: { colors } }) => colors.primary.solid.backDisabled};
+    `}
   `}
 
   ${({ validate }) => validate && css`
@@ -119,6 +134,13 @@ export default styled(Button)`
       color: ${({ theme: { colors } }) => colors.success.effect.foreActive};
       background: ${({ theme: { colors } }) => colors.success.effect.backActive};
     }
+
+    ${({ disabled }) => disabled && css`
+      &, &:hover, &active {
+        color: ${({ theme: { colors } }) => colors.success.effect.foreDisabled};
+        background: ${({ theme: { colors } }) => colors.success.effect.backDisabled};
+      }
+    `}
   `}
 
   ${({ cancel }) => cancel && css`
@@ -134,6 +156,11 @@ export default styled(Button)`
       color: ${({ theme: { colors } }) => colors.alert.effect.foreActive};
       background: ${({ theme: { colors } }) => colors.alert.effect.backActive};
     }
+
+    ${({ disabled }) => disabled && css`
+      color: ${({ theme: { colors } }) => colors.alert.effect.foreDisabled};
+      background: ${({ theme: { colors } }) => colors.alert.effect.backDisabled};
+    `}
   `}
 
   ${({ primary, solid }) => primary && solid && css`
@@ -149,6 +176,11 @@ export default styled(Button)`
       color: ${({ theme: { colors } }) => colors.primary.solid.foreActive};
       background: ${({ theme: { colors } }) => colors.primary.solid.backActive};
     }
+
+    ${({ disabled }) => disabled && css`
+      color: ${({ theme: { colors } }) => colors.primary.solid.foreDisabled};
+      background: ${({ theme: { colors } }) => colors.primary.solid.backDisabled};
+    `}
   `}
 
   ${({ ghost }) => ghost && css`
@@ -176,4 +208,8 @@ export default styled(Button)`
 
   cursor: pointer;
   user-select: none;
+
+  ${({ disabled }) => disabled && css`
+    cursor: no-drop;
+  `}
 `;

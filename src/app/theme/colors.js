@@ -1,4 +1,4 @@
-import palette, { darken } from './palette';
+import palette, { darken, mix } from './palette';
 
 const makeBackEffect = (baseBack) => `${darken(baseBack)} linear-gradient(130deg, ${baseBack} 70%, ${darken(baseBack)} 70%)`;
 
@@ -12,6 +12,9 @@ const makeScheme = (fore, back, backHover) => ({
 
     foreActive: fore,
     backActive: darken(backHover),
+
+    foreDisabled: fore,
+    backDisabled: mix(backHover, palette.dark.gray),
   },
 
   effect: {
@@ -23,6 +26,12 @@ const makeScheme = (fore, back, backHover) => ({
 
     foreActive: fore,
     backActive: darken(backHover),
+
+    foreDisabled: fore,
+    backDisabled: makeBackEffect(mix(
+      backHover,
+      palette.dark.gray,
+    )),
   },
 });
 

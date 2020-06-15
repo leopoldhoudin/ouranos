@@ -55,6 +55,7 @@ const Footer = styled.div`
 const Editor = ({body, onClose}) => {
   const [bodies, setBodies] = state.use('bodies');
   const [edited, setEdited] = useState(clone(body));
+  const [errors, setErrors] = useState(new Object());
   const [view, setView] = useState('general');
 
   const MenuButton = ({name}) => (
@@ -67,7 +68,10 @@ const Editor = ({body, onClose}) => {
       onClick={() => setView(name)} />
   );
 
-  const handleChange = updated => setEdited({...edited, ...updated});
+  const handleChange = (updated, errs) => {
+    setEdited({...edited, ...updated});
+    setErrors({...errors, ...errs});
+  };
 
   const handleClose = () => onClose && onClose();
 
@@ -80,6 +84,8 @@ const Editor = ({body, onClose}) => {
 
     handleClose();
   };
+
+  const hasErrors = Object.values(errors).filter(error => error != null).length > 0;
 
   return (
     <Layout>
@@ -100,7 +106,7 @@ const Editor = ({body, onClose}) => {
       </Body.Layout>
       <Footer>
         <Button large full cancel text='Cancel' onClick={handleClose} />
-        <Button large full validate text='Save' onClick={handleSave} />
+        <Button large full validate text='Save' disabled={hasErrors} onClick={handleSave} />
       </Footer>
     </Layout>
   );

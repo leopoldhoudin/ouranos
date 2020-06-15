@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import { Input } from 'ui';
@@ -21,23 +21,33 @@ const Space = styled.div`
   width: ${({ theme: { sizes }}) => sizes.small.pixels};
 `;
 
-const Physical = ({body, onChange}) => (
-  <Container>
-    <Layout>
-      <Input
-        type='number'
-        full
-        label='Mass'
-        value={body.mass}
-        onChange={mass => onChange({mass})} />
-      <Input
-        type='number'
-        full
-        label='Radius'
-        value={body.radius}
-        onChange={radius => onChange({radius})} />
-    </Layout>
-  </Container>
-);
+const Physical = ({body, onChange}) => {
+  const [errors, setErrors] = useState({mass: null, radius: null});
+
+  const handleChange = attribute => (value, error) => {
+    const nextErrors = {...errors, ...{[attribute]: error}};
+    setErrors(nextErrors);
+    onChange({[attribute]:  value}, nextErrors);
+  };
+
+  return (
+    <Container>
+      <Layout>
+        <Input
+          type='number'
+          full
+          label='Mass'
+          value={body.mass}
+          onChange={handleChange('mass')} />
+        <Input
+          type='number'
+          full
+          label='Radius'
+          value={body.radius}
+          onChange={handleChange('radius')} />
+      </Layout>
+    </Container>
+  );
+};
 
 export default Physical;

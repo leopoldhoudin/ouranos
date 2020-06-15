@@ -1,6 +1,8 @@
 import React, { useReducer, useState, useEffect } from 'react';
 import { createContainer } from 'react-tracked';
 
+import { uuid4 } from 'utils';
+
 const globalState = new Object();
 
 const managers = new Array();
@@ -155,6 +157,7 @@ createSliceManager(
       },
     },
     {
+      uuid: uuid4(),
       name: 'Moon',
       type: 'planet',
       mass: 0.1,
@@ -166,6 +169,7 @@ createSliceManager(
       },
     },
     {
+      uuid: uuid4(),
       name: 'Sun',
       type: 'star',
       mass: 10000,
