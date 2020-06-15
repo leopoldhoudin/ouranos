@@ -37,8 +37,13 @@ const TextBox = styled.div`
 `;
 
 const Button = ({ className, text, icon, ghost, full, small, large, disabled, onClick }) => {
+  const handleClick = event => {
+    onClick && !disabled && onClick();
+    event.stopPropagation();
+  };
+
   return (
-    <div className={className} onClick={() => onClick && !disabled && onClick()}>
+    <div className={className} onClick={handleClick}>
       {
         icon && (
           <IconBox large={large}>

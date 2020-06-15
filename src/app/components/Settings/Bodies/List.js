@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 
-import { capitalize, sort } from 'utils';
+import { capitalize, sort, clone } from 'utils';
 import state from 'state';
 import { Button, Text, Icon, Scroll } from 'ui';
 import { makeSize, scale, transparentize } from 'theme';
@@ -38,10 +38,14 @@ const Header = {
 
   Cell: styled(({className, name, sorting, onClick}) => (
     <div className={className}>
-      <Button
-        ghost
-        icon={getSortingIcon(name, sorting)}
-        onClick={() => onClick(name)} />
+      {
+        sorting && (
+          <Button
+            ghost
+            icon={getSortingIcon(name, sorting)}
+            onClick={() => onClick(name)} />
+        )
+      }
       <Text primary bold>{capitalize(name)}</Text>
     </div>
   ))`
@@ -94,8 +98,7 @@ const Footer = styled.div`
 `;
 
 const sortBodies = (bodies, sorting) => {
-  if (sorting) {
-    console.log(sorting);
+  if (sorting && sorting != 'none') {
     const sorted = sort(bodies, body => body[sorting.name]);
     return sorting.desc ? sorted.reverse() : sorted;
   }
@@ -104,7 +107,7 @@ const sortBodies = (bodies, sorting) => {
 };
 
 const List = ({onSelect}) => {
-  const [sorting, setSorting] = useState(null);
+  const [sorting, setSorting] = useState('none');
   const [bodies, setBodies] = state.use('bodies');
 
   const handleSortingClick = name => {
@@ -112,11 +115,17 @@ const List = ({onSelect}) => {
       if (sorting.asc) {
         setSorting({name, desc: true});
       } else {
-        setSorting(null);
+        setSorting('none');
       }
     } else {
       setSorting({name, asc: true});
     }
+  };
+
+  const handleDeleteClick = body => {
+    const newBodies = clone(bodies);
+    newBodies.splice(newBodies.findIndex(b => b.uuid == body.uuid), 1);
+    setBodies({slice: newBodies});
   };
 
   return (
@@ -126,6 +135,7 @@ const List = ({onSelect}) => {
         <Header.Cell name='name' sorting={sorting} onClick={handleSortingClick} />
         <Header.Cell name='mass' sorting={sorting} onClick={handleSortingClick} />
         <Header.Cell name='radius' sorting={sorting} onClick={handleSortingClick} />
+        <Header.Cell size='huge' name='' />
       </Header.Layout>
       <Body.Container>
         <Scroll vertical height={makeSize(400)}>
@@ -137,6 +147,9 @@ const List = ({onSelect}) => {
                 <Body.Cell><Text primary>{body.name}</Text></Body.Cell>
                 <Body.Cell><Text primary>{body.mass}</Text></Body.Cell>
                 <Body.Cell><Text primary>{body.radius}</Text></Body.Cell>
+                <Body.Cell size='huge'>
+                  <Button icon='trash' cancel onClick={() => handleDeleteClick(body)} />
+                </Body.Cell>
               </Body.Row>
             ))
           }

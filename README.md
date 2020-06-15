@@ -22,7 +22,7 @@
 - [x] Fix bug close bodies window; go to editor; viewer is black
 - [x] Add validator on body name update => check if not already a name of another body! + cannot save body if there is an error
 - [x] Implement new body (crashes for now :p)
-- [ ] Implement delete body
+- [x] Implement delete body
 - [ ] Implement Euler Explicit
 - [ ] EventType to reset engine + implementation
 - [ ] Implement Euler Backward
@@ -30,8 +30,9 @@
 - [ ] Graphics option: scale body
 - [ ] Focus / follow body
 - [ ] Updates of a body in the Settings Window are reflected on the Graphics + Engine
-- [ ] Add ui.Input explanation why is not valid => validator could return NULL if valid; string w/ message if not valid;
+- [x] Add ui.Input explanation why is not valid => validator could return NULL if valid; string w/ message if not valid;
       Use small icon + tooltip on right side of input of before value?
+- [ ] Have confirmation window when deleting a body
 
 ## Idea box
 - Have some record of orbital elements + charts... Will need to think about how

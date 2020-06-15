@@ -91,7 +91,7 @@ const Editor = ({body, onClose}) => {
   const handleSave = () => {
     const newBodies = clone(bodies);
     if (body) {
-      newBodies.splice(newBodies.findIndex(b => b.name == body.name), 1);
+      newBodies.splice(newBodies.findIndex(b => b.uuid == body.uuid), 1);
     }
     newBodies.push(edited);
 
