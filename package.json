@@ -7,7 +7,8 @@
   "license": "MIT",
   "scripts": {
     "start": "webpack-dev-server --open --mode development --env.NODE_ENV=development",
-    "build": "rm -rf dist/ && webpack --mode production --env.NODE_ENV=production"
+    "build": "rm -rf dist/ && webpack --mode production --env.NODE_ENV=production",
+    "test": "node_modules/jest/bin/jest.js"
   },
   "dependencies": {
     "luxon": "^1.24.1",
@@ -29,6 +30,7 @@
     "copy-webpack-plugin": "^5.1.1",
     "html-loader": "^1.1.0",
     "html-webpack-plugin": "^4.0.4",
+    "jest": "^26.0.1",
     "resolve-entry-modules-webpack-plugin": "^2.0.0",
     "webpack": "^4.42.1",
     "webpack-cli": "^3.3.11",

@@ -138,7 +138,7 @@ createSliceManager(
 createSliceManager(
   'engine',
   {
-    integrator: 'dummy',
+    integrator: 'forward-euler',
   },
 );
 
@@ -146,40 +146,57 @@ createSliceManager(
   'bodies',
   [
     {
-      name: 'Earth',
-      type: 'planet',
-      mass: 1,
-      radius: 10,
-      texture: 'earth',
-      initialConditions: {
-        position: {x: 0, y: 0, z: 0},
-        rotation: {x: 0, y: 0, z: 0},
-      },
-    },
-    {
-      uuid: uuid4(),
-      name: 'Moon',
-      type: 'planet',
-      mass: 0.1,
-      radius: 1,
-      texture: 'moon',
-      initialConditions: {
-        position: {x: -50, y: 0, z: 0},
-        rotation: {x: 0, y: 0, z: 0},
-      },
-    },
-    {
       uuid: uuid4(),
       name: 'Sun',
       type: 'star',
       mass: 10000,
-      radius: 100,
+      radius: 10,
       texture: 'sun',
       initialConditions: {
-        position: {x: -1000, y: 0, z: 0},
+        position: {x: 0, y: 0, z: 0},
+        velocity: {x: 0, y: 0, z: 0},
         rotation: {x: 0, y: 0, z: 0},
       },
     },
+
+    {
+      uuid: uuid4(),
+      name: 'Earth',
+      type: 'planet',
+      mass: 1,
+      radius: 1,
+      texture: 'earth',
+      initialConditions: {
+        position: {x: 100, y: 0, z: 0},
+        velocity: {x: 0, y: 0, z: -10},
+        rotation: {x: 0, y: 0, z: 0},
+      },
+    },
+
+    // {
+    //   name: 'Earth',
+    //   type: 'planet',
+    //   mass: 1,
+    //   radius: 10,
+    //   texture: 'earth',
+    //   initialConditions: {
+    //     position: {x: 0, y: 0, z: 0},
+    //     velocity: {x: 1, y: 0, z: 1},
+    //     rotation: {x: 0, y: 0, z: 0},
+    //   },
+    // },
+    // {
+    //   uuid: uuid4(),
+    //   name: 'Moon',
+    //   type: 'planet',
+    //   mass: 0.1,
+    //   radius: 1,
+    //   texture: 'moon',
+    //   initialConditions: {
+    //     position: {x: -50, y: 0, z: 0},
+    //     rotation: {x: 0, y: 0, z: 0},
+    //   },
+    // },
   ],
 );
 

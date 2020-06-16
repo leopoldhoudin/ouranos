@@ -24,3 +24,41 @@ export const uuid4 = () => {
     return v.toString(16);
   });;
 };
+
+/* === === === itertools === === === */
+
+const range = (bounds, callback) => {
+  const array = callback || new Array();
+  for (let i = bounds[0]; i < bounds[1]; i++) {
+    if (callback) {
+      callback(i);
+    } else {
+      array.push(i);
+    }
+  }
+  return callback ? null : array;
+};
+
+// const _product = (index, args, boundsArray, callback) => {
+//   if (index == boundsArray.length) {
+//     range(boundsArray[index], k => {
+//       args.push(k);
+//       callback(args);
+//       args.pop();
+//     });
+//   } else {
+//     range(boundsArray[index], k => {
+//       args.push(k);
+//       _product(index + 1, args, boundsArray, callback);
+//       args.pop();
+//     });
+//   }
+// };
+//
+// const product = (boundsArray, callback) => {
+//   _product(0, new Array(), boundsArray, callback);
+// };
+
+export const iter = {
+  range,
+};

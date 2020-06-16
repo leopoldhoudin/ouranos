@@ -23,9 +23,8 @@
 - [x] Add validator on body name update => check if not already a name of another body! + cannot save body if there is an error
 - [x] Implement new body (crashes for now :p)
 - [x] Implement delete body
-- [ ] Implement Euler Explicit
+- [x] Implement Euler Explicit
 - [ ] EventType to reset engine + implementation
-- [ ] Implement Euler Backward
 - [ ] Basic engine settings window
 - [ ] Graphics option: scale body
 - [ ] Focus / follow body
@@ -33,6 +32,11 @@
 - [x] Add ui.Input explanation why is not valid => validator could return NULL if valid; string w/ message if not valid;
       Use small icon + tooltip on right side of input of before value?
 - [ ] Have confirmation window when deleting a body
+- [ ] Real scale toy system (use AU)
+- [ ] Benchmarks:
+  - [ ] create + operations are faster if "pure data" objects for vector/matrix? (ie no namespace, only data, and operations are pure functional)
+  - [ ] experiment different operations with for-loops and other approaches
+- [ ] Implement Euler Backward
 
 ## Idea box
 - Have some record of orbital elements + charts... Will need to think about how

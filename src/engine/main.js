@@ -30,6 +30,7 @@ const main = () => {
 
 const init = ({params, timestamp, bodies}) => {
   self.integrator = integrators.get(params);
+  self.integrator.init(bodies);
 
   const state = {
     timestamp,

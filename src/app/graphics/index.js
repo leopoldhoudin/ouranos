@@ -6,6 +6,7 @@ import {
   Mesh,
   SphereGeometry,
   TextureLoader,
+  AxesHelper,
 } from 'THREE';
 import { OrbitControls } from 'THREE/examples/jsm/controls/OrbitControls';
 
@@ -52,9 +53,12 @@ const start = () => {
     self.scene.add(mesh);
   });
 
-  self.camera.position.x = 50;
-  self.camera.position.y = 50;
-  self.camera.position.z = 50;
+  const axes = new AxesHelper(50);
+  self.scene.add(axes);
+
+  self.camera.position.x = 0;
+  self.camera.position.y = 200;
+  self.camera.position.z = 0;
   self.camera.lookAt(0, 0, 0);
   self.camera.updateProjectionMatrix();
 
