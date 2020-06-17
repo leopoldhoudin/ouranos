@@ -11,7 +11,7 @@ const get = params => {
     ? (bodies, physics) => methods.init(self, params, bodies, physics)
     : () =>  null;
 
-  const compute = state => methods.compute(self, params, state);
+  const compute = state => methods.compute(self, state);
 
   return {
     name,

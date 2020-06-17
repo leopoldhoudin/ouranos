@@ -4,6 +4,7 @@ import { matrix, vector, addVV, subVV, mulSV } from 'linalg';
 import { makeIntegrator } from './factory';
 
 const init = (self, params, bodies, physics) => {
+  self.step = params.step;
   self.velocities = new Array();
 
   for (let body of bodies) {
@@ -15,8 +16,8 @@ const init = (self, params, bodies, physics) => {
   self.G = physics.G;
 };
 
-const compute = (self, params, {timestamp, masses, positions, rotations}) => {
-  const dt = 0.1;
+const compute = (self,{timestamp, masses, positions, rotations}) => {
+  const dt = self.step;
 
   const state = {
     timestamp: timestamp + dt, // Should be a parameter of the engine.

@@ -23,10 +23,10 @@
 - [x] Add validator on body name update => check if not already a name of another body! + cannot save body if there is an error
 - [x] Implement new body (crashes for now :p)
 - [x] Implement delete body
-- [x] Implement Euler Explicit
+- [x] Implement Euler Explicit integrator
 - [x] EventType to reset engine + implementation
 - [x] Fix pause resets x0.1 to x1
-- [ ] Basic engine settings window
+- [x] Basic engine settings window
 - [ ] Graphics option: update settings "restart" graphics engine + axes + scale body + body texture on/off (only mesh grid)
 - [ ] Focus / follow body
 - [ ] Updates of a body in the Settings Window are reflected on the Graphics + Engine
@@ -37,7 +37,9 @@
 - [ ] Benchmarks:
   - [ ] create + operations are faster if "pure data" objects for vector/matrix? (ie no namespace, only data, and operations are pure functional)
   - [ ] experiment different operations with for-loops and other approaches
-- [ ] Implement Euler Backward
+- [ ] Implement Euler Backward integrator
+- [ ] Implement orbital elements
+- [ ] Implement Keplerian integrator
 
 ## Idea box
 - Have some record of orbital elements + charts... Will need to think about how

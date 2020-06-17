@@ -13,7 +13,7 @@ const makeScheme = (fore, back, backHover) => ({
     foreActive: fore,
     backActive: darken(backHover),
 
-    foreDisabled: fore,
+    foreDisabled: mix(fore, palette.dark.gray),
     backDisabled: mix(backHover, palette.dark.gray),
   },
 
@@ -27,7 +27,7 @@ const makeScheme = (fore, back, backHover) => ({
     foreActive: fore,
     backActive: darken(backHover),
 
-    foreDisabled: fore,
+    foreDisabled: mix(fore, palette.dark.gray),
     backDisabled: makeBackEffect(mix(
       backHover,
       palette.dark.gray,

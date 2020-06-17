@@ -156,7 +156,9 @@ createSliceManager(
   'engine',
   {
     integrator: 'forward-euler',
+    step: 0.1,
   },
+  {restartEngineOnUpdate: true},
 );
 
 createSliceManager(
@@ -215,7 +217,7 @@ createSliceManager(
     //   },
     // },
   ],
-  
+
 );
 
 createSliceManager(

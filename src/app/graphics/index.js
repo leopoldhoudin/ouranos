@@ -56,9 +56,9 @@ const start = () => {
   const axes = new AxesHelper(50);
   self.scene.add(axes);
 
-  self.camera.position.x = 0;
+  self.camera.position.x = 50;
   self.camera.position.y = 200;
-  self.camera.position.z = 0;
+  self.camera.position.z = 100;
   self.camera.lookAt(0, 0, 0);
   self.camera.updateProjectionMatrix();
 

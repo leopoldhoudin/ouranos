@@ -57,8 +57,8 @@ const Selector = {
     padding-left: ${({ theme: { sizes }}) => sizes.medium.pixels};
   `,
 
-  Icon: ({large, open}) => (
-    <Button large={large} icon={open ? 'close' : 'open'} />
+  Icon: ({large, open, onClick}) => (
+    <Button large={large} icon={open ? 'close' : 'open'} onClick={onClick} />
   ),
 };
 
@@ -166,7 +166,7 @@ const DropDown = ({className, children, label, large, value, onChange}) => {
         <Selector.Value>
           {cloneElement(selectedChild)}
         </Selector.Value>
-        <Selector.Icon open={open} large={large} />
+        <Selector.Icon open={open} large={large} onClick={toggleOpen} />
       </Selector.Layout>
       {
         open && (

@@ -1,4 +1,5 @@
 export Button from './Button';
+export CheckBox from './CheckBox';
 export DropDown from './DropDown';
 export Icon from './Icon';
 export Input from './Input';

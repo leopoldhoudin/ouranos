@@ -2,7 +2,7 @@ import { clone } from 'utils';
 
 import { makeIntegrator } from './factory';
 
-const compute = (self, params, {timestamp, masses, positions, rotations}) => {
+const compute = (self, {timestamp, masses, positions, rotations}) => {
   const state = {
     timestamp: timestamp + 60,
 

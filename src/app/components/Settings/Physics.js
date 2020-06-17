@@ -28,22 +28,35 @@ const Body = {
 
 const Footer = styled.div`
   display: flex;
-
   width: 100%;
+
+  & > ${Button}:not(:last-child) {
+    margin-right: ${({ theme: { sizes }}) => sizes.medium.pixels};
+  }
 `;
 
-const Physics = ({...rest}) => {
-  const theme = useContext(ThemeContext);
-
+const Physics = ({onClose, ...rest}) => {
   const [physics, setPhysics] = state.use('physics');
   const [edited, setEdited] = useState(clone(physics));
+  const [errors, setErrors] = useState(new Object());
 
-  const handleChange = name => value => setEdited({...edited, ...{[name]: value}});
+  const theme = useContext(ThemeContext);
 
-  const handleSave = () => setPhysics({slice: edited});
+  const handleChange = name => (value, error) => {
+    setEdited({...edited, ...{[name]: value}});
+    setErrors({...errors, ...{[name]: error}});
+  };
+
+  const handleCancel = () => setEdited(clone(physics));
+  const handleSave = () => {
+    setPhysics({slice: edited});
+    onClose();
+  };
+
+  const hasErrors = Object.values(errors).filter(error => error != null).length > 0;
 
   return (
-    <Base icon='sigma' title='Physics' {...rest}>
+    <Base icon='sigma' title='Physics' onClose={onClose} {...rest}>
       <Layout>
         <Body.Container>
           <Scroll vertical height={makeSize(400 + 2 * theme.sizes.large.value)}>
@@ -61,8 +74,14 @@ const Physics = ({...rest}) => {
           <Button
             large
             full
+            cancel
+            text='Cancel'
+            onClick={handleCancel} />
+          <Button
+            large
+            full
             validate
-            disabled={compare(physics, edited)}
+            disabled={compare(physics, edited) || hasErrors}
             text='Save'
             onClick={handleSave} />
         </Footer>

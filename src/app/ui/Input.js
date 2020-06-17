@@ -104,10 +104,17 @@ const Input = ({className, type, label, large, value, onChange, validator}) => {
     const value = event.target.value;
     if (onChange) {
       const validation = validate(value);
-      onChange(
-        validation == null && type == 'number' ? parseFloat(value) : value,
-        validation,
-      );
+
+      if (validation == null && type == 'number') {
+        onChange(
+          value.endsWith('.') ? value : parseFloat(value),
+        );
+      } else {
+        onChange(
+          value,
+          validation,
+        );
+      }
     }
   };
 

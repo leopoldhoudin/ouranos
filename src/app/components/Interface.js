@@ -90,7 +90,11 @@ const Interface = () => {
     <Container>
       <WindowsLayout>
       {
-        SettingsWindows.map((window, key) => windows[window.name] && cloneElement(window.component, {key, onClose: handleSettingsClose(window.name)}))
+        SettingsWindows.map(
+          (window, key) => (
+            windows[window.name] && cloneElement(window.component, {key, onClose: handleSettingsClose(window.name)})
+          )
+        )
       }
       </WindowsLayout>
       <MainLayout>
