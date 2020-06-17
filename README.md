@@ -24,10 +24,10 @@
 - [x] Implement new body (crashes for now :p)
 - [x] Implement delete body
 - [x] Implement Euler Explicit
-- [ ] EventType to reset engine + implementation
+- [x] EventType to reset engine + implementation
 - [ ] Fix pause resets x0.1 to x1
 - [ ] Basic engine settings window
-- [ ] Graphics option: scale body
+- [ ] Graphics option: update settings "restart" graphics engine + axes + scale body + body texture on/off (only mesh grid)
 - [ ] Focus / follow body
 - [ ] Updates of a body in the Settings Window are reflected on the Graphics + Engine
 - [x] Add ui.Input explanation why is not valid => validator could return NULL if valid; string w/ message if not valid;
