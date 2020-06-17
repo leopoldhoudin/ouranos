@@ -25,7 +25,7 @@
 - [x] Implement delete body
 - [x] Implement Euler Explicit
 - [x] EventType to reset engine + implementation
-- [ ] Fix pause resets x0.1 to x1
+- [x] Fix pause resets x0.1 to x1
 - [ ] Basic engine settings window
 - [ ] Graphics option: update settings "restart" graphics engine + axes + scale body + body texture on/off (only mesh grid)
 - [ ] Focus / follow body

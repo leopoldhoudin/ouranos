@@ -25,7 +25,7 @@ const DisplayContainer = styled.div`
 
 const SpeedControls = () => {
   const [simulation, setSimulation] = state.use('simulation');
-  const [prevSpeed, setPrevSpeed] = useState(0);
+  const [prevSpeed, setPrevSpeed] = useState(simulation.speed);
   const speed = simulation.speed;
 
   const handleToggle = () => {
