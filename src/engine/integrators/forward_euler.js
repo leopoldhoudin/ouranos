@@ -3,9 +3,7 @@ import { matrix, vector, addVV, subVV, mulSV } from 'linalg';
 
 import { makeIntegrator } from './factory';
 
-const G = 1;
-
-const init = (self, params, bodies) => {
+const init = (self, params, bodies, physics) => {
   self.velocities = new Array();
 
   for (let body of bodies) {
@@ -13,6 +11,8 @@ const init = (self, params, bodies) => {
     self.velocities.push(body.initialConditions.velocity.y);
     self.velocities.push(body.initialConditions.velocity.z);
   }
+
+  self.G = physics.G;
 };
 
 const compute = (self, params, {timestamp, masses, positions, rotations}) => {
@@ -58,7 +58,7 @@ const compute = (self, params, {timestamp, masses, positions, rotations}) => {
           ]),
         );
 
-        console.log(dx.norm()); // Shows radius is increasing => accumulates error really quickly!
+        // console.log(dx.norm()); // Shows radius is increasing => accumulates error really quickly!
 
         const d = mulSV(masses[j] / Math.pow(dx.norm(), 3), dx); // Potentially numerically unstable.
         Fx.set(i, j, d.get(0));
@@ -71,7 +71,7 @@ const compute = (self, params, {timestamp, masses, positions, rotations}) => {
   for (let i = 0; i < N; i++) {
     let a = vector.create(3);
     for (let j = 0; j < N; j++) {
-      a = addVV(mulSV(G, a), vector.create([Fx.get(i, j), Fy.get(i, j), Fz.get(i, j)]));
+      a = addVV(mulSV(self.G, a), vector.create([Fx.get(i, j), Fy.get(i, j), Fz.get(i, j)]));
     }
 
     state.positions[3 * i + 0] += self.velocities[3 * i + 0] * dt;

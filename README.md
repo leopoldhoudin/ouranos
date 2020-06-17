@@ -25,6 +25,7 @@
 - [x] Implement delete body
 - [x] Implement Euler Explicit
 - [ ] EventType to reset engine + implementation
+- [ ] Fix pause resets x0.1 to x1
 - [ ] Basic engine settings window
 - [ ] Graphics option: scale body
 - [ ] Focus / follow body

@@ -2,6 +2,7 @@ import React, { useReducer, useState, useEffect } from 'react';
 import { createContainer } from 'react-tracked';
 
 import { uuid4 } from 'utils';
+import engine from 'engine';
 
 const globalState = new Object();
 
@@ -16,13 +17,18 @@ const setValue = (name, path, value) => {
   globalState[name] = {...globalState[name], ...{[path]: value}};
 };
 
+const setSlice = (name, slice) => {
+  globalState[name] = slice;
+};
+
 const createSliceManager = (name, defaultSlice, options) => {
   options = options || {
     noLocalStorage: false,
     synced: false,
     transformInitial: null,
+    restartEngineOnUpdate: false,
   };
-  let {noLocalStorage, synced, transformInitial} = options;
+  let {noLocalStorage, synced, transformInitial, restartEngineOnUpdate} = options;
   if (!transformInitial) {
     transformInitial = slice => slice;
   }
@@ -40,10 +46,19 @@ const createSliceManager = (name, defaultSlice, options) => {
       setValue(name, action.path, action.value);
     } else if (action.slice) {
       newSlice = action.slice;
+      setSlice(name, action.slice);
+
+      if (restartEngineOnUpdate) {
+        engine.start();
+      }
     }
 
     if (!noLocalStorage) {
       window.localStorage.setItem(getLocalStorageKey(name), JSON.stringify(newSlice));
+    }
+
+    if (name == 'bodies') {
+      console.log(globalState);
     }
 
     return newSlice;
@@ -81,7 +96,7 @@ const createSliceManager = (name, defaultSlice, options) => {
   const Manager = ({managers, children}) => {
     if (managers.length > 0) {
       const NextManager = managers[0];
-      const nextManagers = managers.slice(1, managers.length - 1);
+      const nextManagers = managers.slice(1, managers.length);
 
       return (
         <Provider reducer={reduceSlice} initialState={initialSlice}>
@@ -110,7 +125,9 @@ const createSliceManager = (name, defaultSlice, options) => {
 // around. In addition, we don't want to persist them to local storage.
 createSliceManager(
   'status',
-  {engine: null},
+  {
+    engine: null,
+  },
   {noLocalStorage: true, synced: true},
 );
 
@@ -202,7 +219,10 @@ createSliceManager(
 
 createSliceManager(
   'physics',
-  {},
+  {
+    G: 1,
+  },
+  {restartEngineOnUpdate: true},
 );
 
 createSliceManager(

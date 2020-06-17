@@ -29,16 +29,19 @@ const init = () => {
 };
 
 const start = () => {
+  setStatus('starting');
   clearRequests();
   initEngine(
     state.get('engine'),
     state.get('simulation').timestamp,
     state.get('bodies'),
+    state.get('physics'),
   );
   setTimeout(main, 2 * MAIN_LOOP_COOLDOWN);
 };
 
 const main = () => {
+  clearStatus('starting');
   if (buffer.size() < MIN_BUFFER_SIZE_FOR_REQUEST) {
     dampen(
       'engine:main:request-frames',
@@ -50,10 +53,10 @@ const main = () => {
   setTimeout(main, MAIN_LOOP_COOLDOWN);
 };
 
-const initEngine = (params, timestamp, bodies) => {
+const initEngine = (params, timestamp, bodies, physics) => {
   self.prevFrame = null;
   self.nextFrame = null;
-  sendMessage(types.init, {params, timestamp, bodies});
+  sendMessage(types.init, {params, timestamp, bodies, physics});
 };
 
 const clearRequests = () => {

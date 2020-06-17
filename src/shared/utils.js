@@ -18,6 +18,16 @@ export const clone = obj => {
 
 export const sort = (array, getter) => [...array].sort((a, b) => getter(a) > getter(b) ? 1 : -1);
 
+export const order = (obj) => {
+  const ordered = new Object();
+  Object.keys(obj).sort().forEach(k => ordered[k] = obj[k]);
+  return ordered;
+};
+
+export const compare = (obj1, obj2) => {
+  return JSON.stringify(order(obj1)) == JSON.stringify(order(obj2));
+};
+
 export const uuid4 = () => {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
     const r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);

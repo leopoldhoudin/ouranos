@@ -103,7 +103,11 @@ const Input = ({className, type, label, large, value, onChange, validator}) => {
   const handleChange = event => {
     const value = event.target.value;
     if (onChange) {
-      onChange(value, validate(value));
+      const validation = validate(value);
+      onChange(
+        validation == null && type == 'number' ? parseFloat(value) : value,
+        validation,
+      );
     }
   };
 

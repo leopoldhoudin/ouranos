@@ -28,9 +28,9 @@ const main = () => {
   }
 };
 
-const init = ({params, timestamp, bodies}) => {
+const init = ({params, timestamp, bodies, physics}) => {
   self.integrator = integrators.get(params);
-  self.integrator.init(bodies);
+  self.integrator.init(bodies, physics);
 
   const state = {
     timestamp,
@@ -59,7 +59,7 @@ const handleMessage = event => {
   if (event.type) {
     switch (event.type) {
       case types.init:
-        console.debug('back-engine:init', event.params, event.timestamp, event.bodies);
+        console.debug('back-engine:init', event.params, event.timestamp, event.bodies, event.physics);
         init(event);
         break;
 

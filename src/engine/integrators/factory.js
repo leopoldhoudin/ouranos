@@ -7,10 +7,16 @@ const get = params => {
   const integrator = integrators.find(int => int.name == name);
   const methods = integrator.methods;
 
+  const init = methods.init
+    ? (bodies, physics) => methods.init(self, params, bodies, physics)
+    : () =>  null;
+
+  const compute = state => methods.compute(self, params, state);
+
   return {
     name,
-    init: methods.init ? bodies => methods.init(self, params, bodies) : () => {},
-    compute: state => methods.compute(self, params, state),
+    init,
+    compute,
   };
 };
 
