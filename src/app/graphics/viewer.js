@@ -6,7 +6,7 @@ import {
   Mesh,
   SphereGeometry,
   TextureLoader,
-} from 'THREE';
+} from 'three';
 
 const self = {
   animationId: null,
