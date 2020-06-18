@@ -15,7 +15,7 @@ module.exports = env => ({
   resolve: {
     modules: [path.resolve(__dirname, 'src/shared/'), 'node_modules/']
   },
-  devtool: env.NODE_ENV == 'development' ? 'source-map' : true,
+  devtool: env.NODE_ENV == 'development' ? 'source-map' : false,
   module: {
     rules: [
       {
