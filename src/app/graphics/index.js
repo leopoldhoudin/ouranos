@@ -133,8 +133,20 @@ const main = loopTimestamp => {
     );
 
     currFrame.bodies.forEach(
-      (body, index) => updateMesh(self.meshes[index], body)
+      (body, index) => {
+        updateMesh(self.meshes[index], body);
+
+        if (simulation.focus == body.uuid) {
+          self.camera.lookAt(
+            body.position.x,
+            body.position.y,
+            body.position.z,
+          );
+          self.camera.updateProjectionMatrix();
+        }
+      }
     );
+
   }
 
   self.animationId = requestAnimationFrame(main);

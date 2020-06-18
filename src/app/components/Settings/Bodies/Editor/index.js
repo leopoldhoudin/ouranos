@@ -127,7 +127,7 @@ const Editor = ({body, onClose}) => {
           full
           validate
           text='Save'
-          disabled={compare(body, edited) || hasErrors}
+          disabled={(body && compare(body, edited)) || hasErrors}
           onClick={handleSave} />
       </Footer>
     </Layout>

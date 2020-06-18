@@ -146,8 +146,11 @@ const getFrameAt = timestamp => {
     bodies: new Array(),
   }
 
+  const bodies = state.get('bodies');
+
   for (let i = 0; i < self.prevFrame.bodies.length; i++) {
     frame.bodies.push({
+      uuid: bodies[i].uuid,
       position: {
         x: linearInterpol(timestamp, self.prevFrame, self.nextFrame, i, 'position.x'),
         y: linearInterpol(timestamp, self.prevFrame, self.nextFrame, i, 'position.y'),
