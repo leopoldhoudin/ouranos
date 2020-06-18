@@ -147,7 +147,7 @@ createSliceManager(
     // Timestamp of the simulation
     timestamp: 1577836800,
     // Speed of simulation
-    speed: 1,
+    speed: -1,
     // Body of focus (i.e. to follow)
     focus: null,
     // Whether to have a fix angle relative to the body of focus or not
