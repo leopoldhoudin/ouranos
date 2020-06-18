@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { DropDown, Text } from 'ui';
+import { getColorsNames } from 'theme';
 
 const Container = styled.div`
   width: 100%;
@@ -27,6 +28,18 @@ const Graphical = ({body, onChange}) => (
         <DropDown.Item name='earth'><Text>earth</Text></DropDown.Item>
         <DropDown.Item name='moon'><Text>moon</Text></DropDown.Item>
         <DropDown.Item name='sun'><Text>sun</Text></DropDown.Item>
+      </DropDown>
+      <DropDown
+        label='Color'
+        value={body.color}
+        onChange={color => onChange({color})} >
+        {
+          getColorsNames().map(colorName => (
+            <DropDown.Item name={colorName} key={colorName}>
+              <Text>{colorName}</Text>
+            </DropDown.Item>
+          ))
+        }
       </DropDown>
     </Layout>
   </Container>

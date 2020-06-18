@@ -13,6 +13,7 @@ import { OrbitControls } from 'THREE/examples/jsm/controls/OrbitControls';
 import state from 'state';
 import engine from 'engine';
 import { dampen } from 'utils';
+import { colorNameToColor } from 'theme';
 
 const self = {
   animationId: null,
@@ -22,6 +23,8 @@ const self = {
   scene: null,
   camera: null,
   renderer: null,
+
+  axes: null,
   meshes: new Array(),
 };
 
@@ -41,17 +44,21 @@ const init = element => {
 };
 
 const start = () => {
+  const options = state.get('graphics');
   const bodies = state.get('bodies');
 
   self.meshes.forEach(body => self.scene.remove(body));
   self.meshes.splice(0, self.meshes.length);
 
   bodies.forEach(body => {
+    const segmentsCount = options.useTexture ? options.textureSegmentsCount : 16;
+    const materialParams = options.useTexture
+      ? {map: new TextureLoader().load(`textures/${body.texture}.jpg`)}
+      : {color: colorNameToColor(body.color), wireframe: true};
+
     const mesh = new Mesh(
-      new SphereGeometry(body.radius, 32, 32),
-      new MeshBasicMaterial({
-        map: new TextureLoader().load(`textures/${body.texture}.jpg`),
-      }),
+      new SphereGeometry(options.scale * body.radius, segmentsCount, segmentsCount),
+      new MeshBasicMaterial(materialParams),
     );
 
     updateMesh(mesh, body.initialConditions);
@@ -60,13 +67,23 @@ const start = () => {
     self.scene.add(mesh);
   });
 
-  const axes = new AxesHelper(50);
-  self.scene.add(axes);
+  if (options.axes) {
+    self.axes = new AxesHelper(50);
+    self.scene.add(self.axes);
+  } else {
+    self.axes = null;
+  }
 
-  self.camera.position.x = 50;
-  self.camera.position.y = 200;
-  self.camera.position.z = 100;
-  self.camera.lookAt(0, 0, 0);
+  {
+    const {x, y, z} = self.camera.position;
+    if (x == 0 && y == 0 && z == 0) {
+      self.camera.position.x = 50;
+      self.camera.position.y = 200;
+      self.camera.position.z = 100;
+      self.camera.lookAt(0, 0, 0);
+    }
+  }
+
   self.camera.updateProjectionMatrix();
 
   main();
@@ -75,6 +92,12 @@ const start = () => {
 const stop = () => {
   cancelAnimationFrame(self.animationId);
   self.animationId = null;
+
+  if (self.axes) {
+    self.scene.remove(self.axes);
+  }
+
+  self.meshes.forEach(mesh => self.scene.remove(mesh));
 };
 
 const restart =() => {
@@ -98,7 +121,9 @@ const main = loopTimestamp => {
     const simulation = state.get('simulation');
     const bodies = state.get('bodies');
 
-    self.currSimuTimestamp += (Math.pow(10, simulation.speed) * elapsed * 60);
+    self.currSimuTimestamp += simulation.speed != null
+     ? (Math.pow(10, simulation.speed) * elapsed * 60)
+     : 0;
     self.lastLoopTimestamp = loopTimestamp;
 
     dampen(

@@ -152,8 +152,6 @@ createSliceManager(
     focus: null,
     // Whether to have a fix angle relative to the body of focus or not
     locked: false,
-    // Bodies magnifying factor
-    magnify: 1,
   },
   {
     synced: true,
@@ -183,6 +181,7 @@ createSliceManager(
       mass: 10000,
       radius: 10,
       texture: 'sun',
+      color: 'yellow',
       initialConditions: {
         position: {x: 0, y: 0, z: 0},
         velocity: {x: 0, y: 0, z: 0},
@@ -197,6 +196,7 @@ createSliceManager(
       mass: 1,
       radius: 1,
       texture: 'earth',
+      color: 'blue',
       initialConditions: {
         position: {x: 100, y: 0, z: 0},
         velocity: {x: 0, y: 0, z: -10},
@@ -222,7 +222,12 @@ createSliceManager(
 
 createSliceManager(
   'graphics',
-  {},
+  {
+    axes: false,
+    scale: 1,
+    useTexture: true,
+    textureSegmentsCount: 32,
+  },
   {
     restartGraphicsOnUpdate: true,
   },

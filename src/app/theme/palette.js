@@ -5,23 +5,52 @@ import {
   lighten
 } from 'polished';
 
+// https://paletton.com/#uid=73F210knBJje7+Jk1VpoPtikFej
+const BASE_WHITE = '#f9f9f9';
+const BASE_RED = '#e94234';
+const BASE_GREEN = '#28b340'
+const BASE_BLUE = '#447ccf';
+const BASE_YELLOW = '#FFBA43';
+
 export const darken = color => pdarken(0.05, color);
 
 export const transparentize = color => ptransparentize(0.5, color);
 
 export const mix = (firstColor, secondColor) => pmix(0.4, firstColor, secondColor);
 
-// https://paletton.com/#uid=73F210knBJje7+Jk1VpoPtikFej
-const BASE_RED = '#e94234';
-const BASE_GREEN = '#28b340'
-const BASE_BLUE = '#447ccf';
-const BASE_YELLOW = '#000';
+export const getColorsNames = () => ([
+  'white',
+  'red',
+  'green',
+  'blue',
+  'yellow',
+]);
+
+export const colorNameToColor = str => {
+  switch (str) {
+    case 'red':
+      return BASE_RED;
+
+    case 'green':
+      return BASE_GREEN;
+
+    case 'blue':
+      return BASE_BLUE;
+
+    case 'yellow':
+      return BASE_YELLOW;
+
+    case 'white':
+    default:
+      return BASE_WHITE;
+  }
+};
 
 export default {
   light: {
     black: '',
     gray: '#c3c3c3',
-    white: '#f9f9f9',
+    white: BASE_WHITE,
     red: BASE_RED,
     green: BASE_GREEN,
     blue: BASE_BLUE,
