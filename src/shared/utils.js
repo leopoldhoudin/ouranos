@@ -12,8 +12,9 @@ export const dampen = (key, delay, callback) => {
 };
 
 export const clone = obj => {
-  if (obj instanceof Array) return obj.map(val => val);
+  if (obj instanceof Array) return [...obj].map(val => clone(val));
   if (obj instanceof Object) return JSON.parse(JSON.stringify(obj));
+  return obj;
 };
 
 export const sort = (array, getter) => [...array].sort((a, b) => getter(a) > getter(b) ? 1 : -1);

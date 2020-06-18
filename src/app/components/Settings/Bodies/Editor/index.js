@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { makeSize } from 'theme';
 import { Button } from 'ui';
-import { capitalize, clone, uuid4 } from 'utils';
+import { capitalize, clone, uuid4, compare } from 'utils';
 import state from 'state';
 
 import Viewer from './Viewer';
@@ -90,10 +90,11 @@ const Editor = ({body, onClose}) => {
 
   const handleSave = () => {
     const newBodies = clone(bodies);
+
     if (body) {
       newBodies.splice(newBodies.findIndex(b => b.uuid == body.uuid), 1);
     }
-    newBodies.push(edited);
+    newBodies.push({...edited});
 
     setBodies({slice: newBodies});
 
@@ -121,7 +122,13 @@ const Editor = ({body, onClose}) => {
       </Body.Layout>
       <Footer>
         <Button large full cancel text='Cancel' onClick={handleClose} />
-        <Button large full validate text='Save' disabled={hasErrors} onClick={handleSave} />
+        <Button
+          large
+          full
+          validate
+          text='Save'
+          disabled={compare(body, edited) || hasErrors}
+          onClick={handleSave} />
       </Footer>
     </Layout>
   );

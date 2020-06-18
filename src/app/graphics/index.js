@@ -15,6 +15,10 @@ import engine from 'engine';
 import { dampen } from 'utils';
 
 const self = {
+  animationId: null,
+  lastLoopTimestamp: null,
+  currSimuTimestamp: null,
+
   scene: null,
   camera: null,
   renderer: null,
@@ -29,6 +33,9 @@ const init = element => {
   element.appendChild(self.renderer.domElement);
 
   self.controls = new OrbitControls(self.camera, document.getElementById('root'));
+
+  self.lastLoopTimestamp = null;
+  self.currSimuTimestamp = 1577836800;
 
   window.addEventListener('resize', handleWindowResize, false);
 };
@@ -65,16 +72,24 @@ const start = () => {
   main();
 };
 
-let lastLoopTimestamp = null;
-let currSimuTimestamp = 1577836800;
+const stop = () => {
+  cancelAnimationFrame(self.animationId);
+  self.animationId = null;
+};
+
+const restart =() => {
+  stop();
+  start();
+};
+
 const main = loopTimestamp => {
-  if (lastLoopTimestamp == null) {
-    lastLoopTimestamp = loopTimestamp;
+  if (self.lastLoopTimestamp == null) {
+    self.lastLoopTimestamp = loopTimestamp;
   }
-  const elapsed = (loopTimestamp && lastLoopTimestamp)
-    ? (loopTimestamp - lastLoopTimestamp) / 1000
+  const elapsed = (loopTimestamp && self.lastLoopTimestamp)
+    ? (loopTimestamp - self.lastLoopTimestamp) / 1000
     : 0;
-  const currFrame = engine.getFrameAt(currSimuTimestamp);
+  const currFrame = engine.getFrameAt(self.currSimuTimestamp);
 
   self.controls.update();
   self.renderer.render(self.scene, self.camera);
@@ -83,13 +98,13 @@ const main = loopTimestamp => {
     const simulation = state.get('simulation');
     const bodies = state.get('bodies');
 
-    currSimuTimestamp += (Math.pow(10, simulation.speed) * elapsed * 60);
-    lastLoopTimestamp = loopTimestamp;
+    self.currSimuTimestamp += (Math.pow(10, simulation.speed) * elapsed * 60);
+    self.lastLoopTimestamp = loopTimestamp;
 
     dampen(
       'graphics:main',
       100,
-      () => state.set('simulation', 'timestamp', currSimuTimestamp)
+      () => state.set('simulation', 'timestamp', self.currSimuTimestamp)
     );
 
     currFrame.bodies.forEach(
@@ -97,7 +112,7 @@ const main = loopTimestamp => {
     );
   }
 
-  requestAnimationFrame(main);
+  self.animationId = requestAnimationFrame(main);
 };
 
 const updateMesh = (body, values) => {
@@ -120,4 +135,6 @@ export { startViewer, stopViewer } from './viewer';
 export default {
   init,
   start,
+  stop,
+  restart,
 };;

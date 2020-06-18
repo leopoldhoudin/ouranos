@@ -3,6 +3,7 @@ import { createContainer } from 'react-tracked';
 
 import { uuid4 } from 'utils';
 import engine from 'engine';
+import graphics from 'graphics';
 
 const globalState = new Object();
 
@@ -27,8 +28,15 @@ const createSliceManager = (name, defaultSlice, options) => {
     synced: false,
     transformInitial: null,
     restartEngineOnUpdate: false,
+    restartGraphicsOnUpdate: false,
   };
-  let {noLocalStorage, synced, transformInitial, restartEngineOnUpdate} = options;
+  let {
+    noLocalStorage,
+    synced,
+    transformInitial,
+    restartEngineOnUpdate,
+    restartGraphicsOnUpdate,
+  } = options;
   if (!transformInitial) {
     transformInitial = slice => slice;
   }
@@ -51,14 +59,13 @@ const createSliceManager = (name, defaultSlice, options) => {
       if (restartEngineOnUpdate) {
         engine.start();
       }
+      if (restartGraphicsOnUpdate) {
+        graphics.restart();
+      }
     }
 
     if (!noLocalStorage) {
       window.localStorage.setItem(getLocalStorageKey(name), JSON.stringify(newSlice));
-    }
-
-    if (name == 'bodies') {
-      console.log(globalState);
     }
 
     return newSlice;
@@ -128,7 +135,10 @@ createSliceManager(
   {
     engine: null,
   },
-  {noLocalStorage: true, synced: true},
+  {
+    noLocalStorage: true,
+    synced: true,
+  },
 );
 
 createSliceManager(
@@ -158,7 +168,9 @@ createSliceManager(
     integrator: 'forward-euler',
     step: 0.1,
   },
-  {restartEngineOnUpdate: true},
+  {
+    restartEngineOnUpdate: true,
+  },
 );
 
 createSliceManager(
@@ -191,33 +203,11 @@ createSliceManager(
         rotation: {x: 0, y: 0, z: 0},
       },
     },
-
-    // {
-    //   name: 'Earth',
-    //   type: 'planet',
-    //   mass: 1,
-    //   radius: 10,
-    //   texture: 'earth',
-    //   initialConditions: {
-    //     position: {x: 0, y: 0, z: 0},
-    //     velocity: {x: 1, y: 0, z: 1},
-    //     rotation: {x: 0, y: 0, z: 0},
-    //   },
-    // },
-    // {
-    //   uuid: uuid4(),
-    //   name: 'Moon',
-    //   type: 'planet',
-    //   mass: 0.1,
-    //   radius: 1,
-    //   texture: 'moon',
-    //   initialConditions: {
-    //     position: {x: -50, y: 0, z: 0},
-    //     rotation: {x: 0, y: 0, z: 0},
-    //   },
-    // },
   ],
-
+  {
+    restartEngineOnUpdate: true,
+    restartGraphicsOnUpdate: true,
+  },
 );
 
 createSliceManager(
@@ -225,12 +215,17 @@ createSliceManager(
   {
     G: 1,
   },
-  {restartEngineOnUpdate: true},
+  {
+    restartEngineOnUpdate: true,
+  },
 );
 
 createSliceManager(
   'graphics',
   {},
+  {
+    restartGraphicsOnUpdate: true,
+  },
 );
 
 createSliceManager(
