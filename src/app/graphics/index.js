@@ -8,7 +8,7 @@ import {
   TextureLoader,
   AxesHelper,
 } from 'three';
-import { OrbitControls } from 'THREE/examples/jsm/controls/OrbitControls';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 import state from 'state';
 import engine from 'engine';
