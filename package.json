@@ -18,7 +18,7 @@
     "react-draggable": "^4.4.2",
     "react-tracked": "^1.4.0",
     "styled-components": "^5.0.1",
-    "three": "^0.117.1"
+    "three": "^0.137.0"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
